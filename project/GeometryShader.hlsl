@@ -1,9 +1,3 @@
-/*
-Albin Liljegren
-PAACI16
-970416-1117
-*/
-
 cbuffer BUFFER : register(b0)
 {
 	float4x4 world;

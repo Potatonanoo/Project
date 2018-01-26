@@ -1,9 +1,3 @@
-/*
-Albin Liljegren
-PAACI16
-970416-1117
-*/
-
 struct VS_IN
 {
 	float3 Pos : POSITION;

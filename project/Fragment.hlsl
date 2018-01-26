@@ -1,9 +1,3 @@
-/*
-Albin Liljegren
-PAACI16
-970416-1117
-*/
-
 Texture2D shaderTexture : register(t0);
 SamplerState SampleType : register(s0);
 

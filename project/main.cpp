@@ -1,8 +1,3 @@
-/*
-Albin Liljegren
-PAACI16
-970416-1117
-*/
 #include <windows.h>
 #include <DirectXMath.h> 
 #include <d3d11.h>
@@ -437,33 +432,26 @@ void CreateTriangleData()
 	{
 		float x, y, z;
 		float u, v;
-		//float r, g, b;
 	};
 
 	TriangleVertex triangleVertices[6] =
 	{
 		-0.5f, 0.5f, 0.0f,	// v0
-		//1.0f, 1.0, 0.0f,	// v0 color
 		0.f, 0.f,			// q0
 
 		0.5f, 0.5f, 0.0f,	// v1
-		//0.0f, 1.0f, 0.0f,	// v1 color
 		1.f, 0.f,			// q1
 
 		-0.5f, -0.5f, 0.0f,	// v2
-		//0.0f, 0.0f, 0.0f,	// v2 color
 		0.f, 1.f,			// q2
 
 		0.5f, 0.5f, 0.0f,	// v1
-		//1.0f, 0.0f, 0.0f,	// v1 color
 		1.f, 0.f,			// q1
 
 		0.5f, -0.5f, 0.0f,	// v3
-		//0.0f, 1.0f, 0.0f,	// v2 color
 		1.f, 1.f,			// q3
 
 		-0.5f, -0.5f, 0.0f,	// v4
-		//1.0f, 0.0f, 0.0f,	// v1 color
 		0.f, 1.f,			// q4
 
 	};
