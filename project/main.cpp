@@ -11,10 +11,24 @@
 
 using namespace DirectX;
 
-#define SPEED 8.f
-float objAngle = 0.0f;
+# define M_PI           3.14159265358979323846  /* pi */
+
 float startTime = clock();
 float dt;
+
+struct Player
+{
+	XMFLOAT4 camPos;
+	XMFLOAT4 forward;
+	XMFLOAT4 up;
+	XMFLOAT4 right;
+};
+Player player;
+
+float rotationX = M_PI;
+
+//Vector3 localPos = Vector3{ 0.f, 0.f, 0.f };
+//Vector3 globalPos = Vector3{ 0.f, 0.f, 0.f };
 
 ID3D11Texture2D* gDepthStencilBuffer = nullptr;
 ID3D11DepthStencilView* gDepthStencilView = nullptr;
@@ -22,6 +36,8 @@ ID3D11DepthStencilView* gDepthStencilView = nullptr;
 HWND InitWindow(HINSTANCE hInstance);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+void CreatePlayer();
+void Update(float dt);
 HRESULT CreateDirect3DContext(HWND wndHandle);
 void SetViewport();
 HRESULT CreateShaders();
@@ -69,6 +85,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	{
 		CreateDirect3DContext(wndHandle);
 
+		CreatePlayer();
+
 		SetViewport();
 
 		CreateShaders();
@@ -92,9 +110,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 			{
 				dt = ((float)clock() - startTime) * 0.0001f;
 				startTime = (float)clock();
-				objAngle += (SPEED * dt);
-				VsConstData.world = XMMatrixRotationY(objAngle);
 
+				Update(dt);
 				Render();
 
 				gSwapChain->Present(1, 0);
@@ -118,6 +135,110 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	}
 
 	return (int)msg.wParam;
+}
+
+void CreatePlayer()
+{
+	player.camPos = { 0.f, 0.f, -1.f, 1.f };
+	player.forward = { 0.f, 0.f, 1.f, 1.f };
+	player.up = { 0.f, 1.f, 0.f, 1.f };
+	player.right = { 1.f, 0.f, 0.f, 1.f };
+}
+
+void Update(float dt)
+{
+	XMVECTOR xmForward = XMLoadFloat4(&player.forward);
+	XMVECTOR xmUp = XMLoadFloat4(&player.up);
+	XMVECTOR xmPos = XMLoadFloat4(&player.camPos);
+	XMVECTOR xmRight = XMLoadFloat4(&player.right);;
+
+	//Test for rotation
+	if (GetAsyncKeyState('J') < 0)
+	{
+		rotationX = -10.f * dt;
+		XMMATRIX rotation = XMMatrixRotationY(rotationX);
+		xmForward = XMVector3TransformCoord(xmForward, rotation);
+		xmUp = XMVector3TransformCoord(xmUp, rotation);
+		xmRight = XMVector3Cross(xmUp, xmForward);
+
+		XMStoreFloat4(&player.forward, xmForward);
+		XMStoreFloat4(&player.right, xmRight);
+		XMStoreFloat4(&player.up, xmUp);
+	}
+
+	if (GetAsyncKeyState('L') < 0)
+	{
+		rotationX = 10.f * dt;
+		XMMATRIX rotation = XMMatrixRotationY(rotationX);
+		xmForward = XMVector3TransformCoord(xmForward, rotation);
+		xmUp = XMVector3TransformCoord(xmUp, rotation);
+		xmRight = XMVector3Cross(xmUp, xmForward);
+
+		XMStoreFloat4(&player.forward, xmForward);
+		XMStoreFloat4(&player.right, xmRight);
+		XMStoreFloat4(&player.up, xmUp);
+	}
+
+	if (GetAsyncKeyState('I') < 0)
+	{
+		rotationX = -10.f * dt;
+		XMMATRIX rotation = XMMatrixRotationAxis(xmRight, rotationX);
+		xmForward = XMVector3TransformCoord(xmForward, rotation);
+		xmUp = XMVector3TransformCoord(xmUp, rotation);
+
+		XMStoreFloat4(&player.forward, xmForward);
+		XMStoreFloat4(&player.right, xmRight);
+		XMStoreFloat4(&player.up, xmUp);
+	}
+
+	if (GetAsyncKeyState('K') < 0)
+	{
+		rotationX = 10.f * dt;
+		XMMATRIX rotation = XMMatrixRotationAxis(xmRight, rotationX);
+		xmForward = XMVector3TransformCoord(xmForward, rotation);
+		xmUp = XMVector3TransformCoord(xmUp, rotation);
+	}
+
+	XMStoreFloat4(&player.forward, xmForward);
+	XMStoreFloat4(&player.right, xmRight);
+	XMStoreFloat4(&player.up, xmUp);
+
+
+
+	if (GetAsyncKeyState('A') < 0)
+		player.camPos = { 
+		player.camPos.x - (player.right.x * 5 * dt),
+		player.camPos.y - (player.right.y * 5 * dt),
+		player.camPos.z - (player.right.z * 5 * dt),
+		1.f };
+
+	if (GetAsyncKeyState('D') < 0)
+		player.camPos = {
+		player.camPos.x + (player.right.x * 5 * dt),
+		player.camPos.y + (player.right.y * 5 * dt),
+		player.camPos.z + (player.right.z * 5 * dt),
+		1.f };
+
+	if (GetAsyncKeyState('W') < 0)
+		player.camPos = {
+		player.camPos.x + (player.forward.x * 5 * dt),
+		player.camPos.y + (player.forward.y * 5 * dt),
+		player.camPos.z + (player.forward.z * 5 * dt),
+		1.f };
+
+	if (GetAsyncKeyState('S') < 0)
+		player.camPos = {
+		player.camPos.x - (player.forward.x * 5 * dt),
+		player.camPos.y - (player.forward.y * 5 * dt),
+		player.camPos.z - (player.forward.z * 5 * dt),
+		1.f };
+
+	// EyePosition, FocusPosition, UpDirection
+	VsConstData.view = XMMatrixLookAtLH(
+		{ player.camPos.x, player.camPos.y, player.camPos.z },
+		{ player.camPos.x + player.forward.x, player.camPos.y + player.forward.y, player.camPos.z + player.forward.z},
+		{ player.up.x, player.up.y, player.up.z }
+	); 
 }
 
 HWND InitWindow(HINSTANCE hInstance)
@@ -454,6 +575,8 @@ void CreateTriangleData()
 		-0.5f, -0.5f, 0.0f,	// v4
 		0.f, 1.f,			// q4
 
+
+
 	};
 
 	D3D11_BUFFER_DESC bufferDesc;
@@ -481,13 +604,18 @@ void CreateConstantBuffer()
 	// Geometry shader constant data
 	VsConstData.world = 
 	{
-		{ (float)cos(objAngle), (float)-sin(objAngle), 0, 0 },
-		{ (float)sin(objAngle), (float)cos(objAngle), 0, 0 },
+		{ 1, 0, 0, 0 },
+		{ 0, 1, 0, 0 },
 		{ 0, 0, 1, 0 }, 
 		{ 0, 0, 0, 1 }
 	};
 
-	VsConstData.view = XMMatrixLookAtLH({ 0.f, 0.f, -2.f }, { 0.f, 0.f, 0.f }, { 0.f, 1.f, 0.f }); // EyePosition, FocusPosition, UpDirection
+	// EyePosition, FocusPosition, UpDirection
+	VsConstData.view = XMMatrixLookAtLH(
+		{ player.camPos.x, player.camPos.y, player.camPos.z },
+		{ player.camPos.x + player.forward.x, player.camPos.y + player.forward.y, player.camPos.z + player.forward.z },
+		{ player.up.x, player.up.y, player.up.z }
+	);
 	
 	VsConstData.projection = XMMatrixPerspectiveFovLH(XM_PI*0.45f, (float)640 / (float)480, 0.1f, 20.f);
 

@@ -51,21 +51,21 @@ void GS_main( triangle GS_IN IN[3], inout TriangleStream< GS_OUT > output )
 	output.RestartStrip();
 
 	//Primitive infront
-	for (int i = 0; i < 3; i++)
-	{
-		GS_OUT element;
-		element.Pos = IN[i].Pos + normal4;
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	GS_OUT element;
+	//	element.Pos = IN[i].Pos + normal4;
 
-		element.Pos = mul(world, element.Pos);
-		element.Pos_world = element.Pos;
-		element.Pos = mul(view, element.Pos);
-		element.Pos = mul(projection, element.Pos);
+	//	element.Pos = mul(world, element.Pos);
+	//	element.Pos_world = element.Pos;
+	//	element.Pos = mul(view, element.Pos);
+	//	element.Pos = mul(projection, element.Pos);
 
-		//element.Color = IN[i].Color;
-		element.texCoord = IN[i].texCoord;
+	//	//element.Color = IN[i].Color;
+	//	element.texCoord = IN[i].texCoord;
 
-		element.normal = mul(world, normal4);
+	//	element.normal = mul(world, normal4);
 
-		output.Append(element);
-	}
+	//	output.Append(element);
+	//}
 }
