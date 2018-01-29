@@ -15,7 +15,7 @@ using namespace DirectX;
 
 float startTime = clock();
 float dt;
-
+//Hello jag är en inkräktare! ;*
 struct Player
 {
 	XMFLOAT4 camPos;
