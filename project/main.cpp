@@ -5,7 +5,7 @@
 #include "bth_image.h"
 #include <d3d9types.h>
 #include <time.h>
- //Hello jag är en inkräktare! ;*
+
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
@@ -15,7 +15,7 @@ using namespace DirectX;
 
 float startTime = clock();
 float dt;
-
+//Hello jag är en inkräktare! ;*
 struct Player
 {
 	XMFLOAT4 camPos;
