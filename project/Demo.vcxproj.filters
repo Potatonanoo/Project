@@ -18,20 +18,30 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Fragment.hlsl">
-      <Filter>Source Files</Filter>
-    </FxCompile>
     <FxCompile Include="Vertex.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
-    <FxCompile Include="GeometryShader.hlsl">
-      <Filter>Source Files</Filter>
-    </FxCompile>
+    <FxCompile Include="DefPixel.hlsl" />
+    <FxCompile Include="DefVertex.hlsl" />
+    <FxCompile Include="Geometry.hlsl" />
+    <FxCompile Include="Pixel.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bth_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

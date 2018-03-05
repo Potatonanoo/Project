@@ -1,0 +1,24 @@
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see D:\GITHUB\Local\project\Debug\DefPixel.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see D:\GITHUB\Local\project\Debug\DefVertex.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see D:\GITHUB\Local\project\Debug\Geometry.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see D:\GITHUB\Local\project\Debug\Pixel.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see D:\GITHUB\Local\project\Debug\Vertex.cso
+  main.cpp
+d:\github\local\project\main.cpp(17): warning C4244: 'initializing': conversion from 'clock_t' to 'float', possible loss of data
+d:\github\local\project\main.cpp(27): warning C4316: 'Application': object allocated on the heap may not be aligned 16
+  DDSTextureLoader.cpp
+  Application.cpp
+d:\github\local\project\application.cpp(182): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
+d:\github\local\project\application.cpp(183): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
+  Generating Code...
+  Demo.vcxproj -> D:\GITHUB\Local\project\Debug\Demo.exe
