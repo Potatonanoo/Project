@@ -1,25 +1,24 @@
 struct VS_IN
 {
-	float3 Pos : POSITION;
-	//float3 Color : COLOR;
-	float2 texCoord : TEXCOORD;
+	float3 pos			: POSITION;
+	float3 normal		: NORMAL;
+	float2 texCoord		: TEXCOORD;
 };
 
 struct VS_OUT
 {
-	float4 Pos : SV_POSITION;
-	//float3 Color : COLOR;
-	float2 texCoord : TEXCOORD;
+	float4 pos			: SV_POSITION;
+	float3 normal		: NORMAL;
+	float2 texCoord		: TEXCOORD;
 };
-//-----------------------------------------------------------------------------------------
-// VertexShader: VSScene
-//-----------------------------------------------------------------------------------------
+
 VS_OUT VS_main(VS_IN input)
 {
 	VS_OUT output = (VS_OUT)0;
 
-	output.Pos = float4(input.Pos, 1);
+	output.pos = float4(input.pos, 1.f);
+	output.normal = input.normal;
 	output.texCoord = input.texCoord;
-
+	
 	return output;
 }
